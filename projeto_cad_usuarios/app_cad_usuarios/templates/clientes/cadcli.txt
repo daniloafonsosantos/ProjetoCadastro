@@ -1,0 +1,33 @@
+{% extends 'usuarios/base.html' %}
+{% block conteudo %}
+<form action="{% url 'listagem_clientes' %}" method="post">        
+        {% csrf_token %}
+       <div style="text-align: left;" class="container">
+            <h1>Cliente</h1>
+            <p>            
+                <p>Nome <input name="nome" size="100" class="form-control-sm" type="text"> </p>        
+                <p>Data Nascimento <input type="date" class="form-control-sm" id="bday" name="data_nascimento" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></p> 
+                <p>E-mail <input name="email" size="50" class="form-control-sm" type="text"> </p>                                                
+            </p>
+            <p>             
+            <h5>Empréstimo</h5>                
+            <p>Data Emprestimo <input type="date" class="form-control-sm" id="dataemp" name="dataemprestimo" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></p>                        
+            <p>Valor Emprestado <input type="number" class="form-control-sm" min="0" max="9999" step=".01" name="valoremprestado"> </p>                                   
+            <p>Valor Juros <input type="number" class="form-control-sm" min="0" max="9999" step=".01" name="valorjurosmensal"></p> 
+            </p>             
+
+            <button class="form-control-sm">Enviar</button>
+        </div>
+    </form>
+
+{% endblock %}
+
+
+
+
+    
+    
+    
+    
+
+

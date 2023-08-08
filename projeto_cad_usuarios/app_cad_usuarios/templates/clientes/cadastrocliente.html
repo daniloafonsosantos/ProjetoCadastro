@@ -1,0 +1,156 @@
+{% extends 'usuarios/base.html' %}
+{% block conteudo %}
+<form action="{% url 'listagem_clientes' %}" method="post" enctype="multipart/form-data">        
+        {% csrf_token %}
+
+        <style>
+            .input-container {
+              position: relative;
+            }
+        
+            .input-label {
+              position: absolute;
+              top: 50%;
+              left: 10px;
+              transform: translateY(-50%);
+              pointer-events: none;
+              color: #888;
+            }
+        
+            .user-input {
+              padding: 10px;
+              padding-left: 30px; /* Espaço extra para acomodar o rótulo dentro do input */
+              font-size: 16px;
+            }
+
+            .parent-div {
+                width: 400px; /* Largura da div pai */
+                height: 300px; /* Altura da div pai */
+                background-color: #ddd;
+              }
+          </style>
+
+
+
+
+       <div style="text-align: left;" class="container">
+            <h1>Cliente</h1>
+            <p>     
+                Nome            
+                <div class="input-container" placeholder="Nome" name="nomediv"> 
+                    <input type="text" class="user-input" id="nome" name="nome" value="" size="50" />
+                    <label class="input-label" for="nome">Nome:</label>                  
+                </div>
+
+                <p>Data Nascimento</p>                
+                <div class="input-container"> 
+                    <input type="date" class="user-input" id="bday" name="data_nascimento" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
+                </div>
+
+                <p>E-mail</p>                
+                <div class="input-container"> 
+                    <input name="email" size="50" class="user-input" type="text"> 
+                    <!-- <label class="input-label" for="email">Digite seu E-mail</label>                   -->
+                </div>                
+
+            </p>
+            <p>             
+            <h5>Empréstimo</h5>  
+            <p>Data Emprestimo</p>                
+            <div class="input-container"> 
+                <input type="date" class="user-input" id="dataemp" name="dataemprestimo" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">                
+            </div>    
+            
+            Valor Emprestado                
+            <div class="input-container"> 
+                <input type="number" class="user-input" min="0" max="9999" step=".01" name="valoremprestado"> 
+                <!-- <label class="input-label" for="valoremprestado">Digite o valor</label>                   -->
+            </div>
+
+            Valor Juros                
+            <div class="input-container"> 
+                <input type="number" class="user-input" min="0" max="9999" step=".01" name="valorjurosmensal">
+                <!-- <label class="input-label" for="valorjurosmensal">Digite o Juros</label>                   -->
+            </div>            
+
+            Upload File                
+            <div class="input-container"> 
+                <input type="file" id="imagem1" name="imagem1" onchange="converterimagem()">
+            </div>                 
+            
+            <!-- <p> <input type="date" class="form-control-sm" id="dataemp" name="dataemprestimo" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></p>                        
+            <p>Valor Emprestado <input type="number" class="form-control-sm" min="0" max="9999" step=".01" name="valoremprestado"> </p>                                   
+            <p>Valor Juros <input type="number" class="form-control-sm" min="0" max="9999" step=".01" name="valorjurosmensal"></p> 
+
+            <p>Upload File <input type="file" id="imagem1" name="imagem1" onchange="converterimagem()"> </p>   
+            
+            
+              <div class="input-container">
+                <input type="text" class="user-input" id="nome" name="nome" value="" />
+                <label class="input-label" for="nome">Nome:</label>
+              </div>
+
+
+            </p>             
+            -->
+
+            <div id = "apresentarimagem" class="parent-div"></div> 
+    
+        </p>             
+    
+        <script>
+            const input = document.getElementById('nome');
+            const label = document.querySelector('.input-label');
+        
+            input.addEventListener('focus', () => {
+              label.style.display = 'none';
+            });
+        
+            input.addEventListener('blur', () => {
+              if (!input.value) {
+                label.style.display = 'block';
+              }
+            });
+
+            function converterimagem(){
+                    var receberarquivo = document.getElementById("imagem1").files;
+                   console.log(receberarquivo); 
+    
+                   if(receberarquivo.length > 0)
+                   {
+                    var carregarimagem = receberarquivo[0];
+                    console.log(carregarimagem);
+    
+                    var lerarquivo = new FileReader();
+    
+                    lerarquivo.onload = function(arquivocarregado){
+                        var imagembase64 = arquivocarregado.target.result;  
+                        var novaimagem = document.createElement('img'); 
+                        
+                        novaimagem.src = imagembase64;
+                        novaimagem.className = "parent-div"
+    
+                        document.getElementById("apresentarimagem").innerHTML = novaimagem.outerHTML
+                    }
+    
+                    lerarquivo.readAsDataURL(carregarimagem);
+           
+                   }
+    
+            }
+        </script>    
+            <button class="form-control-sm">Enviar</button>
+        </div>
+    </form>
+
+{% endblock %}
+
+
+
+
+    
+    
+    
+    
+
+

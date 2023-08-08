@@ -1,0 +1,56 @@
+{% extends 'usuarios/base.html' %}
+{% block conteudo %}
+<div class="container">
+    <h1>Clientes Cadastrados</h1>
+    <!-- <form action="http://google.com"> -->
+        <form action="{% url 'cadastro_clientes' %}" >    
+            {% csrf_token %}                      
+        <div style='text-align:right'>
+        <input type="submit" class="btn btn-outline-dark" value="Emprestimo" />
+        </div>        
+    </form>    
+    <table class="table table-bordered table-striped  ">
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>            
+            <th>Data Emprestimo</th>            
+            <th>Valor Emprestado</th>                        
+            <th>Valor Mensal</th>
+            <th>Imagem</th>                        
+            <th>Opções</th>                      
+        </tr>
+        {% for cliente in clientes %}
+        <tr>            
+            <td>{{cliente.id}}</td>
+            <td>{{cliente.nome}}</td>
+            <td>{{cliente.dataemprestimo}}</td>
+            <td>{{cliente.valoremprestado}}</td>
+            <td>{{cliente.valorjurosmensal}}</td>                        
+            {% comment %} <td>{{cliente.imagemcliente}}</td>    {% endcomment %}
+            <td>
+                <a href="http://127.0.0.1:8000/media/{{ cliente.imagemcliente }}"  target="_blank" rel="noopener noreferrer">Imagem</a>
+            </td>
+            <td>
+                <div style='text-align:right'>                
+                    <form style='text-align:center' action="{% url 'cadastro_pagamentos' %}" method="post" > 
+                        {% csrf_token %}
+                        <input type="hidden" name="hiddeid" value={{cliente.id}} />                        
+                        <input type="submit" class="btn btn-outline-dark" value="Pagar" />
+                    </form>                           
+                </div>
+            </td>     
+
+        {% endfor %}
+        
+    </table>
+</div>
+{% endblock %}
+
+
+
+
+    
+    
+    
+    
+

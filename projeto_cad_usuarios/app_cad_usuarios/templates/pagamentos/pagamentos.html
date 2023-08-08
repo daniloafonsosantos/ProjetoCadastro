@@ -1,0 +1,58 @@
+{% extends 'usuarios/base.html' %}
+{% block conteudo %}
+<div class="container">
+    <h1>Pagamentos</h1>
+    <script>
+    function refreshPage() {
+        location.reload();
+      }
+  
+      // Defina o intervalo de tempo em milissegundos (5 segundos no exemplo)
+      const intervalo = 5000;
+  
+      // Configura o intervalo para chamar a função refreshPage()
+      setInterval(refreshPage, intervalo); 
+    </script>      
+
+
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>ID</th>
+            <th>Data Emprestimo</th>            
+            <th>Valor Pago</th>                        
+            <th>Valor Quitado</th>                        
+            <th>Opções</th>              
+        </tr>
+        {% for pagamento in pagamentos %}
+
+        <tr>            
+            <td>{{pagamento.id_cliente.nome}}</td>
+            <td>{{pagamento.datapagamento}}</td>
+            <td>{{pagamento.valorpago}}</td>
+            <td>{{pagamento.valorquitado}}</td>               
+            <td>
+                    <form action="http://google.com">
+                        <input type="submit" class="btn btn-outline-dark" value="Pag" />
+                    </form>                           
+            </td>  
+                                
+            
+            <!-- <a href="#" class="btn btn-outline-dark">link</a> -->
+            <!-- <td><input type="button" class="btn btn-outline-dark" value="Ir para o Google" /></td> -->
+
+            <!-- <td><button type="button" >Add</button></td>                        -->
+        {% endfor %}
+        </form>                             
+        </tr>        
+    </table>
+</div>
+{% endblock %}
+
+
+
+
+    
+    
+    
+    
+

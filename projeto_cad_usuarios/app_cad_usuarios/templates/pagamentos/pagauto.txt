@@ -1,0 +1,150 @@
+{% extends 'usuarios/base.html' %}
+{% block conteudo %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Exemplo de carregamento de dados da API com JavaScript puro</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Data Emprestimo</th>
+        <th>Valor Emprestimo</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script>
+    const url = 'http://daniloafonso.pythonanywhere.com/api/clientes/';
+
+    const table = document.querySelector('#userTable tbody');
+    // Obtendo a data atual
+    var dataAtual = new Date();
+
+    // Obtendo os componentes da data atual
+    var dia = dataAtual.getDate();
+    var mes = dataAtual.getMonth() + 1; // Os meses em JavaScript são indexados a partir de zero
+    var ano = dataAtual.getFullYear();
+
+    // Formatando a data no formato desejado
+    var dataFormatada = ano + '-' + mes + '-' + dia ;
+
+    console.log(dataFormatada)
+
+    function fetchData() {
+      return new Promise(resolve => {
+          return fetch(url)
+              .then(response => response.json())
+              .then(data => resolve(data))
+      })
+      .catch(error => console.log(error));
+  }
+
+  data = fetchData().then(data => {
+    data.forEach(user => {
+      const row = table.insertRow();
+
+      const cellName = row.insertCell();
+      cellName.innerHTML = user.nome;
+
+      const cellEmail = row.insertCell();
+      cellEmail.innerHTML = user.email;
+
+      const cellDataEmprestimo = row.insertCell();
+      cellDataEmprestimo.innerHTML = user.dataemprestimo;
+
+      const cellValorEmprestimo = row.insertCell();
+      cellValorEmprestimo.innerHTML = user.valoremprestado;
+
+      const cellButton = row.insertCell();
+      const button = document.createElement('button');
+
+
+      button.classList.add('button');
+      button.textContent = 'Pago';
+
+      console.log(user.id);
+      console.log(user.valoremprestado);
+      console.log(user.dataemprestimo);
+      console.log(user.nome);
+
+
+
+      button.addEventListener('click', () => {
+        const payload =
+        {id_cliente : user.id,
+         datapagamento : dataFormatada,
+         valorpago : user.valoremprestado * 5 / 100,
+         valorquitado : 0 ,
+         quitado100 : 0 };
+
+
+
+        fetch('http://daniloafonso.pythonanywhere.com/api/pagamentos/', {
+          method: 'POST',
+          headers: {"Content-Type": "application/json;charset=UTF-8"},
+          body: JSON.stringify(payload)
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Não foi possível enviar a solicitação POST.');
+            }
+            alert('Solicitação POST enviada com sucesso!');
+          })
+          .catch(error => {
+            console.error(error);
+            alert('Não foi possível enviar a solicitação POST.');
+          });
+      });
+      cellButton.appendChild(button);
+
+          });
+      });
+
+  </script>
+</body>
+</html>
+{% endblock %}

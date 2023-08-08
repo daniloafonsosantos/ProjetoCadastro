@@ -1,0 +1,112 @@
+
+    {% extends 'usuarios/base.html' %}
+    {% block conteudo %}
+    <!-- <form action="{% url 'listagem_usuarios' %}" method="post">   
+        {% csrf_token %}
+       <div style="text-align: center;" class="container">
+            <h1>Cadastro de Usuários</h1>    
+            Nome <input name="nome" class="form-control-sm" type="text">
+            Idade <input name="idade" class="form-control-sm" type="text">            
+            <button class="form-control-sm">Enviar</button>
+        </div>
+    </form> -->
+
+
+    <!-- <form action="{% url 'listagem_clientes' %}" method="post">        
+        {% csrf_token %}
+       <div style="text-align: left;" class="container">
+            <h1>Cliente</h1>
+            <p>            
+                <p>Nome <input name="nome" size="100" class="form-control-sm" type="text"> </p>        
+                <p>Data Nascimento <input type="date" class="form-control-sm" id="bday" name="data_nascimento" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></p> 
+                <p>E-mail <input name="email" size="50" class="form-control-sm" type="text"> </p>                                                
+            </p>
+            <p>             
+            <h5>Empréstimo</h5>                
+            <p>Data Emprestimo <input type="date" class="form-control-sm" id="dataemp" name="dataemprestimo" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"></p>                        
+            <p>Valor Emprestado <input type="number" class="form-control-sm" min="0" max="100" step=".01" name="valoremprestado"> </p>                                   
+            <p>Valor Juros <input type="number" class="form-control-sm" min="0" max="100" step=".01" name="valorjurosmensal"></p>                                                                       
+            </p>             
+
+            <button class="form-control-sm">Enviar</button>
+        </div>
+    </form> -->
+
+    <form>        
+
+            <a href="https://api.whatsapp.com/send?phone=971573348&text=Olá!%20Esta%20é%20uma%20mensagem%20enviada%20via%20API%20do%20WhatsApp." style="display: none;">Enviar mensagem</a>
+                <div style='text-align:right'>                
+                    <form style='text-align:center' action="{% url 'listagem_gradeclientes' %}" > 
+                        {% comment %} <input type="submit" class="btn btn-outline-dark" value="" /> {% endcomment %}
+                    </form>
+                </div>		
+
+                <div style="margin-bottom: 40px;">
+                </div>                     
+                <div style='text-align:right'>                
+                    <form style='text-align:center' action="{% url 'listagem_gradeclientes' %}" > 
+                        <input type="submit" class="btn btn-outline-dark" value="Empréstimo" style="width: 200px" />
+                    </form>                           
+                </div>		                
+
+                <div style="margin-bottom: 20px;">
+                </div>     
+                <div style="margin-bottom: 20px;">                                                          
+                <div style='text-align:right'>                
+                    <form style='text-align:center' action="{% url 'pagamentoautomatico' %}" > 
+                        <input type="submit" class="btn btn-outline-dark" value="Baixa Automática" style="width: 200px" />
+                    </form>                           
+                </div>		                      
+                <div style="margin-bottom: 20px;">                          
+                </div>                         
+                <div style='text-align:right'>                
+                    <form style='text-align:center' action="{% url 'cadastro_pagamentos' %}" > 
+                        <input type="submit" class="btn btn-outline-dark" value="Baixa Manual" style="width: 200px" />
+                    </form>                           
+                </div>		
+                <div style="margin-bottom: 20px;">
+                </div>                                     
+
+                <div style="margin-bottom: 20px;">
+                </div>                     
+                <div style='text-align:right'>                
+                    <form style='text-align:center' action="{% url 'listagem_gradepagamentos' %}" > 
+                        <input type="submit" class="btn btn-outline-dark" value="Empréstimos Baixados" style="width: 200px" />
+                    </form>                           
+                </div>		
+                <div style="margin-bottom: 20px;">
+                </div>                     
+                <div style='text-align:right'>                
+                    <form style='text-align:center' action="{% url 'listagem_gradepagamentos' %}" > 
+                        <button onclick="enviarMensagemWhatsApp()">Enviar mensagem via WhatsApp</button>
+                    </form>                           
+                </div>		                                                
+		
+
+
+                <script>
+                function enviarMensagemWhatsApp() {
+                  var numero = "971573348"; // Substitua pelo número desejado
+                  var mensagem = "Olá! Esta é uma mensagem enviada via API do WhatsApp."; // Substitua pela mensagem desejada
+                  
+                  var url = "https://api.whatsapp.com/send?phone=" + numero + "&text=" + encodeURIComponent(mensagem);
+                  
+                  var link = document.createElement('a');
+                  link.href = url;
+                  link.style.display = 'none';
+                  link.target = '_blank';
+                  
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }
+                </script>                                            
+
+                
+
+
+    </form>
+
+
+
+    {% endblock %}
